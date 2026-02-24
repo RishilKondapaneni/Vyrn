@@ -2,221 +2,178 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>VYRN – Sales Pressure Arena</title>
+<title>VYRN</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-body {
-    background: #0c0c11;
-    color: #e6e6e6;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+html, body {
     margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0a0b0f;
 }
+
+/* Animated Gradient Background */
+.background {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 30%, #1b1f2b, transparent 40%),
+                radial-gradient(circle at 70% 60%, #141824, transparent 40%),
+                #0a0b0f;
+    animation: bgMove 25s infinite alternate ease-in-out;
+}
+
+@keyframes bgMove {
+    0% { transform: translate(0%,0%); }
+    100% { transform: translate(-10%, -10%); }
+}
+
+/* Particle Canvas */
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Main Container */
 .container {
-    max-width: 1000px;
-    margin: auto;
-    padding: 30px;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    animation: fadeIn 3s ease forwards;
+    animation-delay: 0.5s;
 }
-h1 { letter-spacing: 4px; }
-select, button, input {
-    padding: 10px;
-    margin-top: 10px;
-    background: #1a1a20;
-    color: white;
-    border: 1px solid #333;
+
+@keyframes fadeIn {
+    to { opacity: 1; }
 }
-.chat {
-    margin-top: 20px;
-    height: 350px;
-    overflow-y: auto;
-    background: #15151b;
-    padding: 15px;
-    border: 1px solid #222;
+
+/* Logo */
+.logo-wrapper {
+    position: relative;
+    animation: float 8s ease-in-out infinite;
 }
-.analysis {
-    margin-top: 20px;
-    background: #111118;
-    padding: 20px;
-    border: 1px solid #222;
+
+.logo {
+    width: 280px;
+    filter: drop-shadow(0 0 30px rgba(255,255,255,0.08));
+    position: relative;
 }
-.message { margin-bottom: 15px; }
-.user { color: #4fd1c5; }
-.bot { color: #f56565; }
-.metrics {
-    margin-top: 20px;
-    background: #15151b;
-    padding: 15px;
-    border: 1px solid #222;
+
+/* Light Sweep Effect */
+.logo::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.25),
+        transparent
+    );
+    transform: skewX(-25deg);
+    animation: sweep 6s infinite;
 }
-input { width: 65%; }
+
+@keyframes sweep {
+    0% { left: -75%; }
+    100% { left: 125%; }
+}
+
+/* Floating Animation */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Text */
+.coming {
+    margin-top: 60px;
+    letter-spacing: 8px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    animation: pulse 5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.3; }
+    50% { opacity: 0.9; }
+    100% { opacity: 0.3; }
+}
 </style>
 </head>
+
 <body>
 
+<div class="background"></div>
+<canvas id="particles"></canvas>
+
 <div class="container">
-<h1>VYRN</h1>
-<p>Pitch. Or get exposed.</p>
-
-<label>Industry:</label>
-<select id="industry">
-<option value="real estate">Real Estate</option>
-<option value="saas">SaaS</option>
-<option value="fitness coaching">Fitness Coaching</option>
-<option value="insurance">Insurance</option>
-</select>
-
-<br>
-
-<input type="text" id="textInput" placeholder="Deliver your pitch...">
-<button onclick="sendText()">Send</button>
-<button onclick="startListening()">🎤 Speak</button>
-
-<div class="chat" id="chat"></div>
-
-<div class="metrics">
-<h3>Performance Metrics</h3>
-<p>Authority: <span id="authority">50</span>%</p>
-<p>Certainty: <span id="certainty">50</span>%</p>
-<p>Clarity: <span id="clarity">50</span>%</p>
-<p>Persuasion: <span id="persuasion">50</span>%</p>
-<p>Overall Grade: <span id="grade">C</span></p>
-</div>
-
-<div class="analysis">
-<h3>Professional Breakdown</h3>
-<p id="essay">Waiting for your pitch...</p>
-</div>
-
+    <div class="logo-wrapper">
+        <img src="logo.png" class="logo">
+    </div>
+    <div class="coming">Coming Soon...</div>
 </div>
 
 <script>
+/* Particle Effect */
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
 
-let authority = 50;
-let certainty = 50;
-let clarity = 50;
-let persuasion = 50;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-function addMessage(text, type) {
-    const chat = document.getElementById("chat");
-    const div = document.createElement("div");
-    div.className = "message " + type;
-    div.innerText = text;
-    chat.appendChild(div);
-    chat.scrollTop = chat.scrollHeight;
+let particles = [];
+
+for (let i = 0; i < 100; i++) {
+    particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.5,
+        dx: (Math.random() - 0.5) * 0.2,
+        dy: (Math.random() - 0.5) * 0.2
+    });
 }
 
-function updateMetrics() {
-    document.getElementById("authority").innerText = authority;
-    document.getElementById("certainty").innerText = certainty;
-    document.getElementById("clarity").innerText = clarity;
-    document.getElementById("persuasion").innerText = persuasion;
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "rgba(255,255,255,0.3)";
 
-    let avg = (authority + certainty + clarity + persuasion) / 4;
-    let grade = "F";
-    if (avg > 85) grade = "A";
-    else if (avg > 75) grade = "B";
-    else if (avg > 65) grade = "C";
-    else if (avg > 55) grade = "D";
-    document.getElementById("grade").innerText = grade;
+    particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        p.x += p.dx;
+        p.y += p.dy;
+
+        if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    });
+
+    requestAnimationFrame(animate);
 }
 
-function speak(text) {
-    let msg = new SpeechSynthesisUtterance(text);
-    let voices = speechSynthesis.getVoices();
+animate();
 
-    // Try to choose deeper male voice
-    let preferred = voices.find(v =>
-        v.name.toLowerCase().includes("david") ||
-        v.name.toLowerCase().includes("mark") ||
-        v.name.toLowerCase().includes("alex") ||
-        v.name.toLowerCase().includes("male")
-    );
-
-    if (preferred) msg.voice = preferred;
-
-    msg.pitch = 0.7;
-    msg.rate = 1;
-    speechSynthesis.speak(msg);
-}
-
-function evaluatePitch(input) {
-    input = input.toLowerCase();
-
-    let roast = "";
-    let industry = document.getElementById("industry").value;
-
-    // Weak words
-    if (input.includes("just") || input.includes("maybe") || input.includes("kind of")) {
-        certainty -= 15;
-        roast = "You sound unsure. That hesitation? That’s weakness. Eliminate it.";
-    }
-
-    if (input.includes("today") || input.includes("limited") || input.includes("act now")) {
-        persuasion -= 10;
-        roast = "Urgency without value is amateur hour. You don’t create pressure. You create desire.";
-    }
-
-    if (input.includes("because") || input.includes("reason")) {
-        clarity += 10;
-        authority += 8;
-        roast = "At least you're structuring logic. Keep building on that.";
-    }
-
-    if (input.length > 150) {
-        clarity -= 5;
-        roast = "Too long. Tighten it up. Precision sells.";
-    }
-
-    if (!roast) {
-        roast = "Generic. You sound like every other rep in " + industry + ". Bring dominance.";
-    }
-
-    return roast;
-}
-
-function generateEssay(input) {
-    return `Here’s the breakdown. 
-
-Your pitch lacked controlled dominance. High-level sales requires command presence, precise framing, and emotional certainty. You must eliminate filler language and remove hesitation. Authority in sales is not about volume — it's about control and clarity. 
-
-You need stronger positioning. Lead with certainty. Establish status. Anchor value before discussing urgency. Use structured logic: problem → consequence → solution → ownership. 
-
-Right now, your delivery suggests effort. Elite closers suggest inevitability. 
-
-Fix the certainty. Control the frame. Lead the conversation — do not chase it.`;
-}
-
-function processInput(input) {
-    addMessage("You: " + input, "user");
-
-    let roast = evaluatePitch(input);
-    addMessage("VYRN: " + roast, "bot");
-
-    let essay = generateEssay(input);
-    document.getElementById("essay").innerText = essay;
-
-    speak(roast + " " + essay);
-
-    updateMetrics();
-}
-
-function sendText() {
-    let input = document.getElementById("textInput").value;
-    if (!input) return;
-    processInput(input);
-    document.getElementById("textInput").value = "";
-}
-
-function startListening() {
-    const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.lang = "en-US";
-    recognition.start();
-    recognition.onresult = function(event) {
-        const speech = event.results[0][0].transcript;
-        processInput(speech);
-    };
-}
-
-addMessage("VYRN: You have one shot. Impress me.", "bot");
-
+/* Resize Handling */
+window.addEventListener("resize", () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
 </script>
+
 </body>
 </html>
