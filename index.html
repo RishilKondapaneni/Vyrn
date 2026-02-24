@@ -5,18 +5,33 @@
 <title>Rishil</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
-html, body {
+html { scroll-snap-type: y mandatory; }
+
+body {
     margin: 0;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+    font-family: 'Inter', sans-serif;
     background: #0a0b0f;
     color: white;
     overflow-x: hidden;
     scroll-behavior: smooth;
 }
 
-/* Animated background depth */
+/* Scroll Progress Bar */
+#progressBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(to right, #d4af37, #f5d67a);
+    z-index: 100;
+}
+
+/* Parallax background */
 .background {
     position: fixed;
     width: 200%;
@@ -25,42 +40,15 @@ html, body {
         radial-gradient(circle at 25% 30%, #1c1f2a 0%, transparent 40%),
         radial-gradient(circle at 75% 70%, #141823 0%, transparent 40%),
         #0a0b0f;
-    animation: bgMove 35s infinite alternate ease-in-out;
     z-index: -3;
+    transition: transform 0.2s ease-out;
 }
 
-@keyframes bgMove {
-    0% { transform: translate(0,0); }
-    100% { transform: translate(-6%, -6%); }
-}
-
-/* Gold particle layer */
 canvas {
     position: fixed;
     top: 0;
     left: 0;
     z-index: -2;
-}
-
-/* Cinematic intro overlay */
-.intro {
-    position: fixed;
-    inset: 0;
-    background: #0a0b0f;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    letter-spacing: 8px;
-    font-size: 20px;
-    color: #d4af37;
-    animation: introFade 3s forwards;
-    z-index: 10;
-}
-
-@keyframes introFade {
-    0% { opacity: 1; }
-    70% { opacity: 1; }
-    100% { opacity: 0; visibility: hidden; }
 }
 
 /* Hero */
@@ -70,79 +58,48 @@ canvas {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    letter-spacing: 10px;
-    text-align: center;
+    scroll-snap-align: start;
 }
 
 .hero h1 {
-    font-size: 90px;
+    font-family: 'Playfair Display', serif;
+    font-size: 95px;
     color: #d4af37;
     margin: 0;
-    position: relative;
 }
 
-.hero h1::after {
-    content: "";
-    position: absolute;
-    left: -50%;
-    top: 0;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(120deg, transparent, rgba(212,175,55,0.3), transparent);
-    transform: skewX(-25deg);
-    animation: shimmer 6s infinite;
-}
-
-@keyframes shimmer {
-    0% { left: -50%; }
-    100% { left: 150%; }
-}
-
-.hero p {
-    margin-top: 20px;
-    opacity: 0.6;
-    letter-spacing: 4px;
-}
+.hero p { opacity: 0.6; letter-spacing: 4px; }
 
 /* Sections */
 .section {
     padding: 140px 10%;
     max-width: 1100px;
     margin: auto;
-    position: relative;
+    scroll-snap-align: start;
 }
 
 .section h2 {
-    font-size: 38px;
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
     margin-bottom: 70px;
     color: #d4af37;
     text-align: center;
 }
 
-/* Glass panel */
 .panel {
     background: rgba(255,255,255,0.03);
     backdrop-filter: blur(15px);
     border: 1px solid rgba(212,175,55,0.3);
     padding: 70px;
     border-radius: 14px;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    transition: 0.4s ease;
 }
 
 .panel:hover {
     transform: translateY(-6px);
-    box-shadow: 0 20px 50px rgba(212,175,55,0.08);
+    box-shadow: 0 20px 60px rgba(212,175,55,0.1);
 }
 
-/* Gold divider */
-.divider {
-    height: 1px;
-    background: linear-gradient(to right, transparent, #d4af37, transparent);
-    margin: 120px auto;
-    width: 65%;
-}
-
-/* Stats */
 .stat-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -151,132 +108,140 @@ canvas {
 }
 
 .stat {
-    font-size: 48px;
-    font-weight: bold;
+    font-size: 52px;
+    font-weight: 600;
     color: #d4af37;
 }
 
-/* Fade reveal */
-.fade {
-    opacity: 0;
-    transform: translateY(50px);
-    transition: 1.3s ease;
+/* Pulse */
+.counting {
+    animation: pulse 1.5s infinite alternate;
 }
 
-.fade.visible {
-    opacity: 1;
-    transform: translateY(0);
+@keyframes pulse {
+    from { text-shadow: 0 0 5px rgba(212,175,55,0.4); }
+    to { text-shadow: 0 0 30px rgba(212,175,55,0.9); }
 }
 
-.footer {
-    text-align: center;
-    padding: 120px 0;
-    opacity: 0.4;
-    font-size: 14px;
-    letter-spacing: 3px;
+/* Revenue Graph */
+.graph {
+    height: 200px;
+    background: linear-gradient(to top, rgba(212,175,55,0.2), transparent);
+    border-left: 1px solid rgba(212,175,55,0.3);
+    border-bottom: 1px solid rgba(212,175,55,0.3);
+    position: relative;
+    overflow: hidden;
 }
+
+.graph::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(to right, transparent, #d4af37, transparent);
+    animation: graphMove 6s linear infinite;
+    opacity: 0.3;
+}
+
+@keyframes graphMove {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0%); }
+}
+
+/* Fade */
+.fade { opacity: 0; transform: translateY(60px); transition: 1.2s ease; }
+.fade.visible { opacity: 1; transform: translateY(0); }
+
+.footer { text-align:center; padding:100px 0; opacity:0.5; }
 </style>
 </head>
 
 <body>
 
-<div class="background"></div>
+<div id="progressBar"></div>
+<div class="background" id="bg"></div>
 <canvas id="particles"></canvas>
-<div class="intro">PRIVATE ACCESS</div>
 
 <div class="hero">
     <h1>RISHIL</h1>
-    <p>Revenue. Discipline. Dominance.</p>
+    <p>Elite KPI Execution • Account Executive</p>
 </div>
-
-<div class="divider"></div>
 
 <div class="section fade">
-    <h2>National Sales Performance</h2>
-    <div class="panel">
-        <div class="stat-grid">
-            <div><div class="stat counter" data-target="14">0</div><p>Weeks Ranked Top 20 U.S.</p></div>
-            <div><div class="stat">Top 1%</div><p>Across 8,000+ Representatives</p></div>
-            <div><div class="stat counter" data-target="3500">0</div><p>Avg Weekly Commission ($)</p></div>
-            <div><div class="stat counter" data-target="8200">0</div><p>Peak Weekly Commission ($)</p></div>
-        </div>
-    </div>
+<h2>305 & Counting</h2>
+<div class="panel">
+<div class="stat-grid">
+<div>
+<div class="stat counting" id="dealTicker">305+</div>
+<p>Deals Closed</p>
 </div>
-
-<div class="divider"></div>
+<div><div class="stat">5x</div><p>#1 In The Country</p></div>
+<div><div class="stat">57</div><p>Highest Line Count</p></div>
+<div><div class="stat">Top 1%</div><p>National Performance</p></div>
+</div>
+</div>
+</div>
 
 <div class="section fade">
-    <h2>Revenue Generated</h2>
-    <div class="panel">
-        <div class="stat-grid">
-            <div><div class="stat counter" data-target="105000">0</div><p>LeafFilter Contracts ($)</p></div>
-            <div><div class="stat counter" data-target="83000">0</div><p>Kitchen Remodel Revenue ($)</p></div>
-            <div><div class="stat">#1</div><p>Fiber Sales – 11 Consecutive Weeks</p></div>
-            <div><div class="stat counter" data-target="35">0</div><p>Wireless Lines Sold Weekly</p></div>
-        </div>
-    </div>
+<h2>Revenue Velocity</h2>
+<div class="panel">
+<div class="graph"></div>
 </div>
-
-<div class="divider"></div>
+</div>
 
 <div class="section fade">
-    <h2>Competitive Foundation</h2>
-    <div class="panel">
-        Varsity Tennis Captain at Kenyon College. Trained with professional aspirations 
-        within a nationally competitive program. Built elite resilience, performance under pressure, 
-        and disciplined execution transferable into high-stakes revenue environments.
-    </div>
+<h2>AI × Sales</h2>
+<div class="panel">
+Built an AI-powered sales trainer leveraging generative models and KPI simulation frameworks.
+4,000+ interactions. Ranked Top 10 on Kenyon’s Digital Humanities platform.
+</div>
 </div>
 
-<div class="divider"></div>
-
-<div class="section fade">
-    <h2>AI × Sales</h2>
-    <div class="panel">
-        Built and deployed an AI-powered Virtual Sales Trainer leveraging generative models 
-        to simulate objection handling and KPI-driven feedback. 
-        Achieved 4,000+ interactions and ranked Top 10 on Kenyon’s Digital Humanities platform. 
-        Operating at the intersection of behavioral psychology and scalable revenue systems.
-    </div>
-</div>
-
-<div class="divider"></div>
-
-<div class="footer">
-    INVITE ONLY • PRIVATE CAPITAL ENERGY
-</div>
+<div class="footer">RISHIL ©</div>
 
 <script>
 
-/* Fade reveal */
+/* Scroll progress */
+window.onscroll = function() {
+let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+let scrolled = (winScroll / height) * 100;
+document.getElementById("progressBar").style.width = scrolled + "%";
+};
+
+/* Fade */
 const faders = document.querySelectorAll('.fade');
 const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-    });
+entries.forEach(entry => {
+if (entry.isIntersecting) entry.target.classList.add('visible');
+});
 }, { threshold: 0.2 });
-
 faders.forEach(f => observer.observe(f));
 
-/* Counter animation */
-const counters = document.querySelectorAll('.counter');
-counters.forEach(counter => {
-    const target = +counter.getAttribute('data-target');
-    let count = 0;
-    const increment = target / 250;
-    const updateCount = () => {
-        if (count < target) {
-            count += increment;
-            counter.innerText = Math.ceil(count).toLocaleString();
-            requestAnimationFrame(updateCount);
-        } else {
-            counter.innerText = target.toLocaleString();
-        }
-    };
-    updateCount();
+/* Dynamic deal counter */
+let deals = 305;
+let speed = 8000;
+const ticker = document.getElementById("dealTicker");
+
+function incrementDeals() {
+deals++;
+ticker.innerText = deals + "+";
+}
+setInterval(incrementDeals, speed);
+
+ticker.addEventListener("mouseenter", () => speed = 2000);
+ticker.addEventListener("mouseleave", () => speed = 8000);
+
+/* Mouse parallax */
+document.addEventListener("mousemove", e => {
+let x = (e.clientX / window.innerWidth - 0.5) * 20;
+let y = (e.clientY / window.innerHeight - 0.5) * 20;
+document.getElementById("bg").style.transform = `translate(${x}px, ${y}px)`;
 });
 
-/* Gold particle field */
+/* Gold particles */
 const canvas = document.getElementById("particles");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
@@ -284,35 +249,50 @@ canvas.height = window.innerHeight;
 
 let particles = [];
 for (let i = 0; i < 180; i++) {
-    particles.push({
-        x: Math.random()*canvas.width,
-        y: Math.random()*canvas.height,
-        r: Math.random()*1.4,
-        dx: (Math.random()-0.5)*0.25,
-        dy: (Math.random()-0.5)*0.25
-    });
+particles.push({
+x: Math.random()*canvas.width,
+y: Math.random()*canvas.height,
+r: Math.random()*1.4,
+dx: (Math.random()-0.5)*0.25,
+dy: (Math.random()-0.5)*0.25
+});
 }
 
 function animate() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle="rgba(212,175,55,0.35)";
-    particles.forEach(p=>{
-        ctx.beginPath();
-        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-        ctx.fill();
-        p.x+=p.dx;
-        p.y+=p.dy;
-        if(p.x<0||p.x>canvas.width)p.dx*=-1;
-        if(p.y<0||p.y>canvas.height)p.dy*=-1;
-    });
-    requestAnimationFrame(animate);
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="rgba(212,175,55,0.35)";
+particles.forEach(p=>{
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fill();
+p.x+=p.dx;
+p.y+=p.dy;
+if(p.x<0||p.x>canvas.width)p.dx*=-1;
+if(p.y<0||p.y>canvas.height)p.dy*=-1;
+});
+requestAnimationFrame(animate);
 }
 animate();
 
 window.addEventListener("resize", ()=>{
-    canvas.width=window.innerWidth;
-    canvas.height=window.innerHeight;
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 });
+
+/* Section entrance sound */
+const enterSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-quick-win-video-game-notification-269.mp3");
+observer.disconnect();
+const observer2 = new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+enterSound.volume=0.1;
+enterSound.play();
+entry.target.classList.add('visible');
+}
+});
+},{threshold:0.3});
+document.querySelectorAll('.fade').forEach(el=>observer2.observe(el));
+
 </script>
 
 </body>
