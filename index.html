@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Nerva – Cognitive Adversary</title>
+<style>
+body {
+    background: #0f0f12;
+    color: #e6e6e6;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    margin: 0;
+}
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 30px;
+}
+h1 { letter-spacing: 2px; font-weight: 500; }
+select, button {
+    padding: 10px;
+    margin-top: 10px;
+    background: #1a1a20;
+    color: white;
+    border: 1px solid #333;
+}
+.chat {
+    margin-top: 20px;
+    height: 400px;
+    overflow-y: auto;
+    background: #15151b;
+    padding: 15px;
+    border: 1px solid #222;
+}
+.message { margin-bottom: 15px; }
+.user { color: #4fd1c5; }
+.bot { color: #f56565; }
+.metrics {
+    margin-top: 20px;
+    background: #15151b;
+    padding: 15px;
+    border: 1px solid #222;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>NERVA</h1>
+<p>Convince me.</p>
+
+<label>Industry:</label>
+<select id="industry">
+<option value="real estate">Real Estate</option>
+<option value="saas">SaaS</option>
+<option value="fitness coaching">Fitness Coaching</option>
+<option value="insurance">Insurance</option>
+</select>
+
+<br>
+<button onclick="startListening()">🎤 Speak</button>
+
+<div class="chat" id="chat"></div>
+
+<div class="metrics">
+<h3>Psychological Metrics</h3>
+<p>Emotional Control: <span id="control">50</span>%</p>
+<p>Trust Level: <span id="trust">40</span>%</p>
+<p>Pressure Index: <span id="pressure">30</span>%</p>
+<p>Resistance Level: <span id="resistance">60</span>%</p>
+</div>
+</div>
+
+<script>
+
+// Core State
+let control = 50;
+let trust = 40;
+let pressure = 30;
+let resistance = 60;
+
+// Personality Variables (random each session)
+let skepticism = Math.floor(Math.random()*10)+1;
+let egoSensitivity = Math.floor(Math.random()*10)+1;
+let financialStress = Math.floor(Math.random()*10)+1;
+let timePressure = Math.floor(Math.random()*10)+1;
+
+// Behavioral Memory
+let empathyCount = 0;
+let pressureTactics = 0;
+let logicalFraming = 0;
+
+function addMessage(text, type) {
+    const chat = document.getElementById("chat");
+    const div = document.createElement("div");
+    div.className = "message " + type;
+    div.innerText = text;
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+}
+
+function updateMetrics() {
+    document.getElementById("control").innerText = control;
+    document.getElementById("trust").innerText = trust;
+    document.getElementById("pressure").innerText = pressure;
+    document.getElementById("resistance").innerText = resistance;
+}
+
+function analyzeInput(input) {
+
+    let response = "";
+    let industry = document.getElementById("industry").value;
+
+    // Empathy detection
+    if (input.includes("understand") || input.includes("feel") || input.includes("fair") || input.includes("makes sense")) {
+        empathyCount++;
+        trust += 8;
+        resistance -= 6;
+        response = "At least you’re acknowledging how I feel… most reps skip that part.";
+    }
+
+    // Pressure detection
+    if (input.includes("today") || input.includes("now") || input.includes("deadline") || input.includes("limited")) {
+        pressureTactics++;
+        pressure += 12;
+        trust -= 7;
+        resistance += 10;
+        response = "That urgency… it feels forced. Why are you rushing me?";
+    }
+
+    // Manipulation detection
+    if (input.includes("guarantee") || input.includes("promise") || input.includes("everyone") || input.includes("best")) {
+        trust -= 10;
+        resistance += 8;
+        response = "Big claims. I’ve heard big claims before.";
+    }
+
+    // Logical framing detection
+    if (input.includes("because") || input.includes("reason") || input.includes("data")) {
+        logicalFraming++;
+        control += 5;
+        trust += 5;
+        response = "Okay… at least you're explaining your reasoning.";
+    }
+
+    // If no trigger, respond based on resistance
+    if (!response) {
+        if (resistance > 75) {
+            response = "I’m not convinced. You’re not addressing what actually matters to me.";
+        } else if (trust > 60) {
+            response = "You’re different than most " + industry + " reps. I’m listening… carefully.";
+        } else {
+            response = "I’ve dealt with too many " + industry + " salespeople who say the same things.";
+        }
+    }
+
+    return response;
+}
+
+function startListening() {
+    const recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.lang = "en-US";
+    recognition.start();
+
+    recognition.onresult = function(event) {
+        const speech = event.results[0][0].transcript.toLowerCase();
+        addMessage("You: " + speech, "user");
+
+        let botReply = analyzeInput(speech);
+        addMessage("Customer: " + botReply, "bot");
+
+        updateMetrics();
+    };
+}
+
+addMessage("Customer: Why are you calling me?", "bot");
+
+</script>
+
+</body>
+</html>
