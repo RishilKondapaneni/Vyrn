@@ -20,7 +20,6 @@ body {
     scroll-behavior: smooth;
 }
 
-/* Scroll Progress Bar */
 #progressBar {
     position: fixed;
     top: 0;
@@ -31,7 +30,6 @@ body {
     z-index: 100;
 }
 
-/* Parallax background */
 .background {
     position: fixed;
     width: 200%;
@@ -51,7 +49,6 @@ canvas {
     z-index: -2;
 }
 
-/* Hero */
 .hero {
     height: 100vh;
     display: flex;
@@ -59,6 +56,7 @@ canvas {
     justify-content: center;
     align-items: center;
     scroll-snap-align: start;
+    text-align:center;
 }
 
 .hero h1 {
@@ -68,9 +66,13 @@ canvas {
     margin: 0;
 }
 
-.hero p { opacity: 0.6; letter-spacing: 4px; }
+.hero h3 {
+    margin-top:20px;
+    font-weight:300;
+    letter-spacing:3px;
+    opacity:0.7;
+}
 
-/* Sections */
 .section {
     padding: 140px 10%;
     max-width: 1100px;
@@ -81,7 +83,7 @@ canvas {
 .section h2 {
     font-family: 'Playfair Display', serif;
     font-size: 40px;
-    margin-bottom: 70px;
+    margin-bottom: 60px;
     color: #d4af37;
     text-align: center;
 }
@@ -103,54 +105,16 @@ canvas {
 .stat-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 50px;
+    gap: 40px;
     text-align: center;
 }
 
 .stat {
-    font-size: 52px;
+    font-size: 48px;
     font-weight: 600;
     color: #d4af37;
 }
 
-/* Pulse */
-.counting {
-    animation: pulse 1.5s infinite alternate;
-}
-
-@keyframes pulse {
-    from { text-shadow: 0 0 5px rgba(212,175,55,0.4); }
-    to { text-shadow: 0 0 30px rgba(212,175,55,0.9); }
-}
-
-/* Revenue Graph */
-.graph {
-    height: 200px;
-    background: linear-gradient(to top, rgba(212,175,55,0.2), transparent);
-    border-left: 1px solid rgba(212,175,55,0.3);
-    border-bottom: 1px solid rgba(212,175,55,0.3);
-    position: relative;
-    overflow: hidden;
-}
-
-.graph::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 200%;
-    height: 100%;
-    background: linear-gradient(to right, transparent, #d4af37, transparent);
-    animation: graphMove 6s linear infinite;
-    opacity: 0.3;
-}
-
-@keyframes graphMove {
-    from { transform: translateX(-50%); }
-    to { transform: translateX(0%); }
-}
-
-/* Fade */
 .fade { opacity: 0; transform: translateY(60px); transition: 1.2s ease; }
 .fade.visible { opacity: 1; transform: translateY(0); }
 
@@ -166,36 +130,87 @@ canvas {
 
 <div class="hero">
     <h1>RISHIL</h1>
-    <p>Elite KPI Execution • Account Executive</p>
+    <h3>What I've Accomplished</h3>
 </div>
 
+<!-- TELECOM -->
 <div class="section fade">
-<h2>305 & Counting</h2>
+<h2>Telecommunications Performance</h2>
 <div class="panel">
 <div class="stat-grid">
-<div>
-<div class="stat counting" id="dealTicker">305+</div>
-<p>Deals Closed</p>
-</div>
-<div><div class="stat">5x</div><p>#1 In The Country</p></div>
-<div><div class="stat">57</div><p>Highest Line Count</p></div>
-<div><div class="stat">Top 1%</div><p>National Performance</p></div>
+<div><div class="stat">$1,141,920</div><p>Total Generated</p></div>
+<div><div class="stat">38 Weeks</div><p>Top 20 U.S. Streak (3rd Longest Nationally)</p></div>
+<div><div class="stat">$26.2K</div><p>Peak Weekly Commission</p></div>
+<div><div class="stat">35+</div><p>Sales Weekly | #1 Nationwide</p></div>
+<div><div class="stat">11 Weeks</div><p>#1 B2B Fiber National Record</p></div>
 </div>
 </div>
 </div>
 
+<!-- AI -->
 <div class="section fade">
-<h2>Revenue Velocity</h2>
+<h2>Artificial Intelligence Industry</h2>
 <div class="panel">
-<div class="graph"></div>
+<div class="stat-grid">
+<div><div class="stat">$93,122</div><p>Total Generated</p></div>
+<div><div class="stat">74.6%</div><p>Win Rate Closer</p></div>
+</div>
 </div>
 </div>
 
+<!-- HOME IMPROVEMENT -->
 <div class="section fade">
-<h2>AI × Sales</h2>
+<h2>Home Improvement Services</h2>
 <div class="panel">
-Built an AI-powered sales trainer leveraging generative models and KPI simulation frameworks.
-4,000+ interactions. Ranked Top 10 on Kenyon’s Digital Humanities platform.
+<div class="stat-grid">
+<div><div class="stat">$188,342</div><p>Total Generated</p></div>
+<div><div class="stat">$83K</div><p>Kitchen Remodel Revenue (1 Month)</p></div>
+<div><div class="stat">$105K</div><p>6-Week Campaign Revenue</p></div>
+<div><div class="stat">Top 20</div><p>4 Straight Weeks National</p></div>
+<div><div class="stat">Top 1%</div><p>Across 4 Separate Programs</p></div>
+</div>
+</div>
+</div>
+
+<!-- LEADERSHIP -->
+<div class="section fade">
+<h2>Leadership & Scale</h2>
+<div class="panel">
+<div class="stat-grid">
+<div><div class="stat">40+</div><p>People Hired & Trained</p></div>
+</div>
+<p style="margin-top:40px;">
+I have built teams, trained high performers, and helped others replicate elite execution standards.
+My goal is not just personal success — it's scalable impact.
+</p>
+</div>
+</div>
+
+<!-- COMMUNITY -->
+<div class="section fade">
+<h2>Building The Largest Free Community</h2>
+<div class="panel">
+I am building the largest free community of disciplined, growth-oriented individuals.
+A place where killers help killers.
+No gatekeeping. No ego. Just performance.
+A network where we exchange strategy, sales systems, AI leverage, fitness discipline, and capital growth knowledge.
+This is about creating an ecosystem of mutual elevation.
+</div>
+</div>
+
+<!-- WHAT I OFFER -->
+<div class="section fade">
+<h2>What I Offer</h2>
+<div class="panel">
+• Elite KPI systems and sales execution frameworks  
+• Objection handling mastery training  
+• AI integration for revenue acceleration  
+• Leadership and scaling playbooks  
+• Accountability & performance standards  
+• Access to a high-performance growth network  
+
+This isn’t theory.
+This is proven execution.
 </div>
 </div>
 
@@ -212,61 +227,37 @@ document.getElementById("progressBar").style.width = scrolled + "%";
 };
 
 /* Fade */
-const faders = document.querySelectorAll('.fade');
-const observer = new IntersectionObserver(entries => {
-entries.forEach(entry => {
-if (entry.isIntersecting) entry.target.classList.add('visible');
+const observer = new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting) entry.target.classList.add('visible');
 });
-}, { threshold: 0.2 });
-faders.forEach(f => observer.observe(f));
+},{threshold:0.2});
+document.querySelectorAll('.fade').forEach(el=>observer.observe(el));
 
-/* Dynamic deal counter */
-let deals = 305;
-let speed = 8000;
-const ticker = document.getElementById("dealTicker");
+/* Parallax */
+document.addEventListener("mousemove", e=>{
+let x=(e.clientX/window.innerWidth-0.5)*20;
+let y=(e.clientY/window.innerHeight-0.5)*20;
+document.getElementById("bg").style.transform=`translate(${x}px,${y}px)`;
+});
 
-function incrementDeals() {
-deals++;
-ticker.innerText = deals + "+";
+/* Particles */
+const canvas=document.getElementById("particles");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+let particles=[];
+for(let i=0;i<160;i++){
+particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1.4,dx:(Math.random()-0.5)*0.25,dy:(Math.random()-0.5)*0.25});
 }
-setInterval(incrementDeals, speed);
-
-ticker.addEventListener("mouseenter", () => speed = 2000);
-ticker.addEventListener("mouseleave", () => speed = 8000);
-
-/* Mouse parallax */
-document.addEventListener("mousemove", e => {
-let x = (e.clientX / window.innerWidth - 0.5) * 20;
-let y = (e.clientY / window.innerHeight - 0.5) * 20;
-document.getElementById("bg").style.transform = `translate(${x}px, ${y}px)`;
-});
-
-/* Gold particles */
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let particles = [];
-for (let i = 0; i < 180; i++) {
-particles.push({
-x: Math.random()*canvas.width,
-y: Math.random()*canvas.height,
-r: Math.random()*1.4,
-dx: (Math.random()-0.5)*0.25,
-dy: (Math.random()-0.5)*0.25
-});
-}
-
-function animate() {
+function animate(){
 ctx.clearRect(0,0,canvas.width,canvas.height);
 ctx.fillStyle="rgba(212,175,55,0.35)";
 particles.forEach(p=>{
 ctx.beginPath();
 ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
 ctx.fill();
-p.x+=p.dx;
-p.y+=p.dy;
+p.x+=p.dx;p.y+=p.dy;
 if(p.x<0||p.x>canvas.width)p.dx*=-1;
 if(p.y<0||p.y>canvas.height)p.dy*=-1;
 });
@@ -274,25 +265,10 @@ requestAnimationFrame(animate);
 }
 animate();
 
-window.addEventListener("resize", ()=>{
+window.addEventListener("resize",()=>{
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 });
-
-/* Section entrance sound */
-const enterSound = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-quick-win-video-game-notification-269.mp3");
-observer.disconnect();
-const observer2 = new IntersectionObserver(entries=>{
-entries.forEach(entry=>{
-if(entry.isIntersecting){
-enterSound.volume=0.1;
-enterSound.play();
-entry.target.classList.add('visible');
-}
-});
-},{threshold:0.3});
-document.querySelectorAll('.fade').forEach(el=>observer2.observe(el));
-
 </script>
 
 </body>
