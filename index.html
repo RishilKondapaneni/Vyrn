@@ -139,8 +139,7 @@ canvas {
             color:#d4af37;
             letter-spacing:2px;
             text-shadow:0 0 25px rgba(212,175,55,0.6);
-            transition:0.4s ease;
-        ">305</div>
+        ">0</div>
 
         <div style="
             margin-top:10px;
@@ -155,13 +154,13 @@ canvas {
 
 <!-- TELECOM -->
 <div class="section fade">
-<h2>Telecom Product Sales</h2>
+<h2>Telecommunications Performance</h2>
 <div class="panel">
 <div class="stat-grid">
 <div><div class="stat">$1,141,920</div><p>Total Generated</p></div>
-<div><div class="stat">38 Weeks</div><p>Top 20 U.S. Streak (3rd Longest Nationally)</p></div>
+<div><div class="stat">38 Weeks</div><p>Top 20 U.S. Streak</p></div>
 <div><div class="stat">$26.2K</div><p>Peak Weekly Commission</p></div>
-<div><div class="stat">35+</div><p>Sales Weekly | Reached #1 Nationwide</p></div>
+<div><div class="stat">35+</div><p>Sales Weekly | #1 Nationwide</p></div>
 <div><div class="stat">11 Weeks</div><p>#1 B2B Fiber National Record</p></div>
 </div>
 </div>
@@ -169,7 +168,7 @@ canvas {
 
 <!-- AI -->
 <div class="section fade">
-<h2>Artificial Intelligence Product Sales</h2>
+<h2>Artificial Intelligence Industry</h2>
 <div class="panel">
 <div class="stat-grid">
 <div><div class="stat">$93,122</div><p>Total Generated</p></div>
@@ -180,14 +179,14 @@ canvas {
 
 <!-- HOME IMPROVEMENT -->
 <div class="section fade">
-<h2>Home Improvement Services Sales</h2>
+<h2>Home Improvement Services</h2>
 <div class="panel">
 <div class="stat-grid">
 <div><div class="stat">$188,342</div><p>Total Generated</p></div>
-<div><div class="stat">$83K</div><p>Kitchen Remodel Revenue (1 Month)</p></div>
+<div><div class="stat">$83K</div><p>Kitchen Remodel Revenue</p></div>
 <div><div class="stat">$105K</div><p>6-Week Campaign Revenue</p></div>
 <div><div class="stat">Top 20</div><p>4 Straight Weeks National</p></div>
-<div><div class="stat">Top 1%</div><p>Across 4 Separate Programs</p></div>
+<div><div class="stat">Top 1%</div><p>Across 4 Programs</p></div>
 </div>
 </div>
 </div>
@@ -200,8 +199,7 @@ canvas {
 <div><div class="stat">40+</div><p>People Hired & Trained</p></div>
 </div>
 <p style="margin-top:40px;">
-I have built teams, trained high performers, and helped others replicate elite execution standards.
-My goal is not just personal success — it's scalable impact.
+Built teams. Trained performers. Replicated elite execution standards.
 </p>
 </div>
 </div>
@@ -210,11 +208,9 @@ My goal is not just personal success — it's scalable impact.
 <div class="section fade">
 <h2>Building The Largest Free Community</h2>
 <div class="panel">
-I am building the largest free community of disciplined, growth-oriented individuals.
-A place where killers help killers.
-No gatekeeping. No ego. Just performance.
-A network where we exchange strategy, sales systems, AI leverage, fitness discipline, and capital growth knowledge.
-This is about creating an ecosystem of mutual elevation.
+Creating a free network of disciplined, growth-oriented individuals.
+Where strategy is shared. Standards are high.
+And execution is everything.
 </div>
 </div>
 
@@ -222,15 +218,11 @@ This is about creating an ecosystem of mutual elevation.
 <div class="section fade">
 <h2>What I Offer</h2>
 <div class="panel">
-• Elite KPI systems and sales execution frameworks  
-• Objection handling mastery training  
-• AI integration for revenue acceleration  
-• Leadership and scaling playbooks  
-• Accountability & performance standards  
-• Access to a high-performance growth network  
-
-This isn’t theory.
-This is proven execution.
+• Elite KPI systems  
+• Objection handling mastery  
+• AI leverage for revenue  
+• Leadership playbooks  
+• Accountability & execution standards  
 </div>
 </div>
 
@@ -253,6 +245,23 @@ if(entry.isIntersecting) entry.target.classList.add('visible');
 });
 },{threshold:0.2});
 document.querySelectorAll('.fade').forEach(el=>observer.observe(el));
+
+/* Hero Deal Counter Animation */
+const mainDeal = document.getElementById("dealMain");
+let heroCount = 0;
+const heroTarget = 305;
+const heroIncrement = heroTarget / 120;
+
+function animateHeroDeal() {
+    if (heroCount < heroTarget) {
+        heroCount += heroIncrement;
+        mainDeal.innerText = Math.ceil(heroCount);
+        requestAnimationFrame(animateHeroDeal);
+    } else {
+        mainDeal.innerText = heroTarget;
+    }
+}
+animateHeroDeal();
 
 /* Parallax */
 document.addEventListener("mousemove", e=>{
@@ -289,6 +298,7 @@ window.addEventListener("resize",()=>{
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
 });
+
 </script>
 
 </body>
